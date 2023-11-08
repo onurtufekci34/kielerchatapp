@@ -1,8 +1,10 @@
 import Add from '../img/addAvatar.png'
 import { useState } from 'react'
-import { auth,storage } from '../firebase/config'
-import {createUserWithEmailAndPassword} from 'firebase/auth'
+import { auth,storage,db } from '../firebase/config'
+import {createUserWithEmailAndPassword,updateProfile} from 'firebase/auth'
 import {ref,uploadBytesResumable,getDownloadURL} from 'firebase/storage'
+import {doc,setDoc} from 'firebase/firestore'
+
 
 
 
@@ -16,6 +18,7 @@ export default function Register() {
   const handleSubmit = async (e) =>{
     e.preventDefault();
     setLoading(true)
+    setError(false)
 
     const userName = e.target[0].value;
     const email=e.target[1].value;
@@ -30,7 +33,32 @@ export default function Register() {
 
       await uploadBytesResumable(storageRef,avatar).then(() =>{
         getDownloadURL(storageRef).then(async (downloadURL)=>{
-          console.log(downloadURL)
+          //console.log(downloadURL)
+
+          try {
+            await updateProfile(res.user,{
+              displayName:userName,
+              photoURL:downloadURL
+            })
+
+            //console.log(res.user)
+
+            await setDoc(doc(db,"users",res.user.uid),{
+              uid:res.user.uid,
+              userName,
+              email,
+              fotoUrl:downloadURL
+            })
+
+            await setDoc(doc(db,"userChats",res.user.uid),{})
+
+
+
+
+          } catch (error) {
+            setError(error.message)
+            setLoading(false)
+          }
         })
       })
 
@@ -60,7 +88,7 @@ export default function Register() {
         <form onSubmit={handleSubmit}>
           <input required type="text" placeholder='Your Name' />
           <input required type="text" placeholder='Your E-Mail' />
-          <input required type="text" placeholder='Your Password'/>
+          <input required type="password" placeholder='Your Password'/>
           <input required style={{display:"none"}} type="file" id='file' />
           <label htmlFor="file">
             <img src={Add} alt="" />
