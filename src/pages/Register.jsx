@@ -47,7 +47,7 @@ export default function Register() {
               uid:res.user.uid,
               userName,
               email,
-              fotoUrl:downloadURL
+              photoURL:downloadURL
             })
 
             await setDoc(doc(db,"userChats",res.user.uid),{})
