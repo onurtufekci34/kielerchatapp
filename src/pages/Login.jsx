@@ -1,4 +1,4 @@
-
+import {Link} from 'react-router-dom'
 
 
 export default function Login() {
@@ -15,7 +15,7 @@ export default function Login() {
           <button>Login</button>
         </form>
         <p>
-        If you don not have a membership <a href="">Sign up</a>
+        If you don not have a membership<Link to="/register"> Sign up</Link>
         </p>
         
     </div>

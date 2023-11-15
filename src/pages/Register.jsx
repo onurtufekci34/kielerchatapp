@@ -4,6 +4,7 @@ import { auth,storage,db } from '../firebase/config'
 import {createUserWithEmailAndPassword,updateProfile} from 'firebase/auth'
 import {ref,uploadBytesResumable,getDownloadURL} from 'firebase/storage'
 import {doc,setDoc} from 'firebase/firestore'
+import {useNavigate,Link} from 'react-router-dom'
 
 
 
@@ -14,6 +15,7 @@ export default function Register() {
 
   const [error, setError] = useState(false)
   const [loading,setLoading] = useState(false)
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) =>{
     e.preventDefault();
@@ -51,6 +53,7 @@ export default function Register() {
             })
 
             await setDoc(doc(db,"userChats",res.user.uid),{})
+            navigate("/")
 
 
 
@@ -99,7 +102,7 @@ export default function Register() {
           {error && <p>{error}</p>}
         </form>
         {!loading && <p>
-        If you have a membership <a href=""> Log in</a>
+        If you have a membership <Link to="/login"> Log in</Link>
         </p>}
         
     </div>
