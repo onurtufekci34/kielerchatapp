@@ -12,7 +12,7 @@ export const AuthContextProvider =({children})=>{
 
         const unsub= onAuthStateChanged(auth,(user) =>{
             setLoginUser(user)
-            console.log(user)
+            //console.log(user)
         })
 
         return ()=>{
