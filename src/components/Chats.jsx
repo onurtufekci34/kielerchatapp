@@ -29,7 +29,7 @@ export default function Chats() {
   },[loginUser.uid])
 
 
-  console.log(Object.entries(chats))
+  //console.log(Object.entries(chats))
 
 
   return (
