@@ -2,6 +2,7 @@ import { useState, useContext } from "react"
 import { db } from "../firebase/config"
 import { collection,query,where,getDocs,getDoc,doc,updateDoc,serverTimestamp, setDoc } from "firebase/firestore"
 import {AuthContext} from '../contexts/AuthContext'
+import {ChatContext} from '../contexts/ChatContext'
 
 
 
@@ -12,6 +13,8 @@ export default function Search() {
   const [searchUser, setSearchUser]= useState("")
   const [user , setUser] = useState(null)
   const [error,setError] = useState(false)
+
+  const {dispatch} = useContext(ChatContext)
 
   const {loginUser} =useContext(AuthContext)
 
@@ -69,6 +72,8 @@ const handleSelect = async ()=>{
           },
           [combinedId + ".date"]:serverTimestamp()
         });
+
+        dispatch({type:"CHANGE_USER",payload:user})
 
     } catch (error) {
       
