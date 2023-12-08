@@ -1,6 +1,6 @@
 # Kieler Chat App
 
-This is a web application created using React, React-Router, Firebase, Custom Hooks and Netlify used to chat with friends.
+This is a web application created using React, React-Router, Firebase, Uid, SCSS, Custom Hooks and Netlify used to chat with friends.
 
 ## Installation
 
